@@ -1,1 +1,48 @@
-Hello World
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bruno dc silva</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Roboto Mono', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .text {
+            font-size: 3rem;
+            display: inline-block;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 12px; /* Increased width for a more rectangular box */
+            height: 0.6em;
+            background-color: #ffffff;
+            margin-left: 5px;
+            animation: blink 1.2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="text">Bruno DC Silva<span class="cursor"></span></div>
+</body>
+</html>
