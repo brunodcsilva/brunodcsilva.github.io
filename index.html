@@ -22,22 +22,26 @@
             text-align: center;
             position: relative;
             overflow: hidden;
+            padding: 20px; /* Prevent text from touching the edges */
         }
 
         .text {
-            font-size: 3rem;
+            font-size: 5vw; /* Responsive font size based on viewport width */
             display: inline-block;
             position: relative;
             z-index: 2;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.7), 0 0 20px rgba(255, 255, 255, 0.5), 0 0 30px rgba(255, 255, 255, 0.3); /* Glow effect */
+            word-wrap: break-word; /* Prevent breaking */
+            max-width: 100%; /* Ensure text doesn't overflow */
+            white-space: nowrap; /* Prevent text from wrapping */
         }
 
         .cursor {
             display: inline-block;
-            width: 12px; /* Increased width for a more rectangular box */
-            height: 0.6em;
+            width: 0.6em; /* Proportional width */
+            height: 1em; /* Height proportional to the text */
             background-color: #ffffff;
-            margin-left: 5px;
+            margin-left: 0.2em; /* Slight margin between text and cursor */
             animation: blink 1.2s infinite;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.7), 0 0 20px rgba(255, 255, 255, 0.5), 0 0 30px rgba(255, 255, 255, 0.3); /* Cursor glow effect */
         }
@@ -69,6 +73,16 @@
         @keyframes flicker {
             0% { opacity: 0.1; }
             100% { opacity: 0.2; }
+        }
+
+        @media (max-width: 768px) {
+            .text {
+                font-size: 8vw; /* Increase font size slightly on smaller screens */
+            }
+            .cursor {
+                width: 0.5em; /* Make the cursor slightly smaller */
+                height: 0.8em; /* Adjust cursor height */
+            }
         }
     </style>
 </head>
