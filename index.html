@@ -34,7 +34,7 @@
                    0 0 20px rgba(255, 255, 255, 0.6),
                    0 0 30px rgba(255, 255, 255, 0.4);
       white-space: nowrap;
-      animation: flickerText 0.15s infinite alternate;
+      animation: flickerText 0.3s infinite alternate;
     }
 
     .cursor {
@@ -43,7 +43,8 @@
       height: 1em;
       background-color: #ffffff;
       margin-left: 0.2em;
-      animation: blink 1.2s infinite, flickerCursor 0.15s infinite alternate;
+      animation: blink 1.2s infinite;
+      /* Glow effect remains */
       box-shadow: 0 0 20px rgba(255, 255, 255, 0.9),
                   0 0 30px rgba(255, 255, 255, 0.7),
                   0 0 40px rgba(255, 255, 255, 0.5);
@@ -54,18 +55,14 @@
       50% { opacity: 0; }
     }
 
-    /* Text Flicker */
+    /* Randomized Text Flicker Effect */
     @keyframes flickerText {
       0% { opacity: 1; text-shadow: 0 0 15px rgba(255, 255, 255, 0.9); }
-      50% { opacity: 0.85; text-shadow: 0 0 20px rgba(255, 255, 255, 0.7); }
-      100% { opacity: 0.9; text-shadow: 0 0 25px rgba(255, 255, 255, 0.5); }
-    }
-
-    /* Cursor Flicker */
-    @keyframes flickerCursor {
-      0% { box-shadow: 0 0 15px rgba(255, 255, 255, 0.9); }
-      50% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.6); }
-      100% { box-shadow: 0 0 25px rgba(255, 255, 255, 0.4); }
+      23% { opacity: 0.85; text-shadow: 0 0 25px rgba(255, 255, 255, 0.7); }
+      48% { opacity: 0.92; text-shadow: 0 0 30px rgba(255, 255, 255, 0.6); }
+      67% { opacity: 0.88; text-shadow: 0 0 20px rgba(255, 255, 255, 0.8); }
+      85% { opacity: 0.9; text-shadow: 0 0 18px rgba(255, 255, 255, 0.5); }
+      100% { opacity: 1; text-shadow: 0 0 22px rgba(255, 255, 255, 0.9); }
     }
 
     /* Scanline Effect */
