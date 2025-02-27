@@ -1,95 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>brunodcsilva_</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background-color: #121212;
-            color: #ffffff;
-            font-family: 'Roboto Mono', monospace;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            padding: 20px; /* Prevent text from touching the edges */
-        }
-
-        .text {
-            font-size: 5vw; /* Responsive font size */
-            display: inline-block;
-            position: relative;
-            z-index: 2;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 
-                         0 0 20px rgba(255, 255, 255, 0.6), 
-                         0 0 30px rgba(255, 255, 255, 0.4); /* Glow effect */
-            white-space: nowrap; /* Prevents text wrapping */
-        }
-
-        .cursor {
-            display: inline-block;
-            width: 0.2em; /* Cursor width relative to text size */
-            height: 1em; /* Cursor height relative to text size */
-            background-color: #ffffff;
-            margin-left: 0.2em; /* Space between text and cursor */
-            animation: blink 1.2s infinite;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 
-                        0 0 20px rgba(255, 255, 255, 0.6), 
-                        0 0 30px rgba(255, 255, 255, 0.4); /* Glow effect */
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        /* Scanline Effect */
-        .scanlines {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                transparent, 
-                transparent 3px, 
-                rgba(255, 255, 255, 0.1) 3px,  
-                rgba(255, 255, 255, 0.1) 5px
-            );
-            pointer-events: none;
-            z-index: 1;
-            animation: flicker 0.1s infinite alternate;
-        }
-
-        /* Flicker effect */
-        @keyframes flicker {
-            0% { opacity: 0.1; }
-            100% { opacity: 0.2; }
-        }
-
-        @media (max-width: 768px) {
-            .text {
-                font-size: 8vw; /* Bigger text on smaller screens */
-            }
-            .cursor {
-                width: 0.15em; /* Smaller cursor width */
-                height: 1em; /* Keep height proportional */
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="scanlines"></div>
-    <div class="text">bruno dc silva<span class="cursor"></span></div>
-</body>
-</html>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>brunodcsilva_</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background-color: #121212;
+      color: #ffffff;
+      font-family: 'Roboto Mono', monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      padding: 20px;
+    }
+    .text {
+      font-size: 5vw; /* Responsive font size */
+      display: inline-block;
+      position: relative;
+      z-index: 2;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
+                   0 0 20px rgba(255, 255, 255, 0.6),
+                   0 0 30px rgba(255, 255, 255, 0.4);
+      white-space: nowrap;
+    }
+    .cursor {
+      display: inline-block;
+      width: 0.2em; /* Relative to the text size */
+      height: 1em;
+      background-color: #ffffff;
+      margin-left: 0.2em;
+      animation: blink 1.2s infinite;
+      /* Increased glow for the cursor */
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.9),
+                  0 0 30px rgba(255, 255, 255, 0.7),
+                  0 0 40px rgba(255, 255, 255, 0.5);
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    /* Scanline Effect */
+    .scanlines {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        transparent,
+        transparent 3px,
+        rgba(255, 255, 255, 0.1) 3px,
+        rgba(255, 255, 255, 0.1) 5px
+      );
+      pointer-events: none;
+      z-index: 1;
+      animation: flicker 0.1s infinite alternate;
+    }
+    @keyframes flicker {
+      0% { opacity: 0.1; }
+      100% { opacity: 0.2; }
+    }
+    @media (max-width: 768px) {
+      .text {
+        font-size: 8vw;
+      }
+      .cursor 
