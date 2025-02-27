@@ -26,24 +26,26 @@
         }
 
         .text {
-            font-size: 5vw; /* Responsive font size based on viewport width */
+            font-size: 5vw; /* Responsive font size */
             display: inline-block;
             position: relative;
             z-index: 2;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7), 0 0 20px rgba(255, 255, 255, 0.5), 0 0 30px rgba(255, 255, 255, 0.3); /* Glow effect */
-            word-wrap: break-word; /* Prevent breaking */
-            max-width: 100%; /* Ensure text doesn't overflow */
-            white-space: nowrap; /* Prevent text from wrapping */
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 
+                         0 0 20px rgba(255, 255, 255, 0.6), 
+                         0 0 30px rgba(255, 255, 255, 0.4); /* Glow effect */
+            white-space: nowrap; /* Prevents text wrapping */
         }
 
         .cursor {
             display: inline-block;
-            width: 0.6em; /* Proportional width */
-            height: 1em; /* Height proportional to the text */
+            width: 0.2em; /* Cursor width relative to text size */
+            height: 1em; /* Cursor height relative to text size */
             background-color: #ffffff;
-            margin-left: 0.2em; /* Slight margin between text and cursor */
+            margin-left: 0.2em; /* Space between text and cursor */
             animation: blink 1.2s infinite;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7), 0 0 20px rgba(255, 255, 255, 0.5), 0 0 30px rgba(255, 255, 255, 0.3); /* Cursor glow effect */
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 
+                        0 0 20px rgba(255, 255, 255, 0.6), 
+                        0 0 30px rgba(255, 255, 255, 0.4); /* Glow effect */
         }
 
         @keyframes blink {
@@ -60,13 +62,13 @@
             height: 100%;
             background: repeating-linear-gradient(
                 transparent, 
-                transparent 3px, /* Smaller space between lines for more subtle scanlines */
-                rgba(255, 255, 255, 0.1) 3px,  /* Slightly more visible scanlines */
+                transparent 3px, 
+                rgba(255, 255, 255, 0.1) 3px,  
                 rgba(255, 255, 255, 0.1) 5px
             );
             pointer-events: none;
             z-index: 1;
-            animation: flicker 0.1s infinite alternate; /* Simulate the flicker of an old TV */
+            animation: flicker 0.1s infinite alternate;
         }
 
         /* Flicker effect */
@@ -77,11 +79,11 @@
 
         @media (max-width: 768px) {
             .text {
-                font-size: 8vw; /* Increase font size slightly on smaller screens */
+                font-size: 8vw; /* Bigger text on smaller screens */
             }
             .cursor {
-                width: 0.5em; /* Make the cursor slightly smaller */
-                height: 0.8em; /* Adjust cursor height */
+                width: 0.15em; /* Smaller cursor width */
+                height: 1em; /* Keep height proportional */
             }
         }
     </style>
