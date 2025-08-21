@@ -20,7 +20,6 @@
       align-items: center;
       text-align: center;
       position: relative;
-      transition: all 0.3s ease;
     }
 
     body.off .text,
@@ -73,30 +72,15 @@
     @keyframes flickerScreen { 0%{opacity:0.1;} 100%{opacity:0.2;} }
 
     /* CRT Power On Animation */
-    .crt-on {
-      animation: crtOn 1s forwards;
-    }
+    .crt-on { animation: crtOn 1s forwards; }
     @keyframes crtOn {
-      0% {
-        transform: scaleY(0.05) scaleX(0);
-        opacity: 0;
-        filter: brightness(500%);
-      }
-      50% {
-        transform: scaleY(0.05) scaleX(1);
-        opacity: 1;
-      }
-      100% {
-        transform: scaleY(1) scaleX(1);
-        opacity: 1;
-        filter: brightness(100%);
-      }
+      0% { transform: scaleY(0.05) scaleX(0); opacity: 0; filter: brightness(500%); }
+      50% { transform: scaleY(0.05) scaleX(1); opacity: 1; }
+      100% { transform: scaleY(1) scaleX(1); opacity: 1; filter: brightness(100%); }
     }
 
     /* CRT Power Off Animation */
-    .crt-off {
-      animation: crtOff 0.8s forwards;
-    }
+    .crt-off { animation: crtOff 0.8s forwards; }
     @keyframes crtOff {
       0% { transform: scaleY(1) scaleX(1); opacity: 1; filter: brightness(100%); }
       50% { transform: scaleY(0.05) scaleX(1); opacity: 1; filter: brightness(500%); }
@@ -105,111 +89,116 @@
 
     /* Modes */
     body.white { background-color: #121212; color: #ffffff; }
-    body.white .text {
-      color: #ffffff;
-      text-shadow: 0 0 10px rgba(255,255,255,0.8),
-                   0 0 20px rgba(255,255,255,0.6),
-                   0 0 30px rgba(255,255,255,0.4);
-    }
-    body.white .cursor {
-      background-color: #ffffff;
-      box-shadow: 0 0 20px rgba(255,255,255,0.9),
-                  0 0 30px rgba(255,255,255,0.7),
-                  0 0 40px rgba(255,255,255,0.5);
-    }
+    body.white .text { color: #ffffff; text-shadow: 0 0 15px #fff; }
+    body.white .cursor { background-color: #fff; box-shadow: 0 0 20px #fff; }
+    body.white .selector::after { background: #fff; box-shadow: 0 0 10px #fff; }
 
     body.green { background-color: #001400; color: #00ff00; }
-    body.green .text {
-      color: #00ff00;
-      text-shadow: 0 0 8px #00ff00, 0 0 16px #00ff00, 0 0 32px #00ff00;
-    }
-    body.green .cursor {
-      background-color: #00ff00;
-      box-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00;
-    }
+    body.green .text { color: #00ff00; text-shadow: 0 0 16px #00ff00; }
+    body.green .cursor { background-color: #00ff00; box-shadow: 0 0 20px #00ff00; }
+    body.green .selector::after { background: #00ff00; box-shadow: 0 0 10px #00ff00; }
 
     body.amber { background-color: #140a00; color: #ffbf00; }
-    body.amber .text {
-      color: #ffbf00;
-      text-shadow: 0 0 8px #ffbf00, 0 0 16px #ffbf00, 0 0 32px #ffbf00;
-    }
-    body.amber .cursor {
-      background-color: #ffbf00;
-      box-shadow: 0 0 20px #ffbf00, 0 0 40px #ffbf00;
-    }
+    body.amber .text { color: #ffbf00; text-shadow: 0 0 16px #ffbf00; }
+    body.amber .cursor { background-color: #ffbf00; box-shadow: 0 0 20px #ffbf00; }
+    body.amber .selector::after { background: #ffbf00; box-shadow: 0 0 10px #ffbf00; }
 
-    /* Button container */
-    .button-area {
-      margin-top: 2rem;
-      width: 50px;
-      height: 50px;
-      position: relative;
-    }
-
-    /* Power button (initial) */
-    .power-btn,
-    .selector {
+    /* Control Panels */
+    .controls {
       position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      border-radius: 50%;
-      border: 3px solid #333;
-      cursor: pointer;
+      bottom: 2rem;
       display: flex;
       align-items: center;
-      justify-content: center;
-      transition: transform 0.3s ease, opacity 0.5s;
-    }
-
-    .power-btn {
-      background: radial-gradient(circle at 30% 30%, #666, #222);
-      box-shadow: inset -3px -3px 6px rgba(0,0,0,0.6),
-                  inset 3px 3px 6px rgba(255,255,255,0.1),
-                  0 0 15px rgba(0,0,0,0.8);
+      gap: 2rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1s ease;
       z-index: 2;
     }
-    .power-btn:active { transform: scale(0.95); }
-    .power-btn::after {
-      content: "⏻";
-      font-size: 2.5rem;
-      color: #fff;
-      text-shadow: 0 0 10px #fff;
-    }
-    body.on .power-btn {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .selector {
-      background: radial-gradient(circle at 30% 30%, #555, #111);
-      box-shadow: inset -3px -3px 6px rgba(0,0,0,0.6),
-                  inset 3px 3px 6px rgba(255,255,255,0.1),
-                  0 0 6px rgba(0,0,0,0.8);
-      opacity: 0;
-      pointer-events: none;
-      z-index: 1;
-    }
-    body.on .selector {
+    body.on .controls {
       opacity: 1;
       pointer-events: auto;
     }
 
+    .startup {
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      pointer-events: auto;
+      z-index: 2;
+    }
+    body.on .startup {
+      display: none;
+    }
+
+    /* Power Button */
+    .power-btn {
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #444, #111);
+      border: 3px solid #222;
+      box-shadow: inset -4px -4px 8px rgba(0,0,0,0.8),
+                  inset 3px 3px 6px rgba(255,255,255,0.1),
+                  0 4px 6px rgba(0,0,0,0.9);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .power-btn:active {
+      transform: translateY(2px);
+      box-shadow: inset 3px 3px 6px rgba(0,0,0,0.9),
+                  inset -3px -3px 6px rgba(255,255,255,0.05);
+    }
+    .power-btn::after {
+      content: "⏻";
+      font-size: 2rem;
+      color: #eee;
+      text-shadow: 0 0 4px #fff;
+    }
+
+    /* LED Indicator */
+    .led {
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #330000, #111);
+      box-shadow: inset -1px -1px 3px rgba(0,0,0,0.8);
+      transition: all 0.3s ease;
+    }
+    body.on .led {
+      background: radial-gradient(circle at 30% 30%, #00ff00, #004400);
+      box-shadow: 0 0 6px #00ff00, 0 0 12px #00ff00;
+    }
+
+    /* Selector Knob */
+    .selector {
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      background: conic-gradient(#333 0deg 10deg, #222 10deg 20deg, #333 20deg 30deg, #222 30deg 40deg);
+      border: 3px solid #111;
+      box-shadow: inset -4px -4px 10px rgba(0,0,0,0.9),
+                  inset 3px 3px 8px rgba(255,255,255,0.05),
+                  0 3px 8px rgba(0,0,0,0.9);
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.3s ease;
+    }
     .selector::after {
       content: "";
       position: absolute;
-      width: 6px; height: 15px;
+      top: 8px; left: 50%;
+      transform: translateX(-50%);
+      width: 6px; height: 16px;
+      border-radius: 2px;
       background: #666;
-      border-radius: 3px;
-      top: calc(50% - 20px);
+      box-shadow: 0 0 4px #000;
       transition: background 0.3s, box-shadow 0.3s;
     }
-    body.white .selector::after { background: #fff; box-shadow: 0 0 12px #fff; }
-    body.green .selector::after { background: #00ff00; box-shadow: 0 0 12px #00ff00; }
-    body.amber .selector::after { background: #ffbf00; box-shadow: 0 0 12px #ffbf00; }
 
     @media (max-width: 768px) {
       .text { font-size: 8vw; }
       .cursor { width: 0.3em; height: 0.9em; }
+      .controls { gap: 1.2rem; }
     }
   </style>
 </head>
@@ -217,8 +206,15 @@
   <div class="scanlines"></div>
   <div class="text">bruno dc silva<span class="cursor"></span></div>
 
-  <div class="button-area">
-    <div class="power-btn" onclick="powerOn()"></div>
+  <!-- Startup Power Button (centered at start) -->
+  <div class="startup">
+    <div class="power-btn" onclick="togglePower()"></div>
+  </div>
+
+  <!-- Full Controls (shown only when powered on) -->
+  <div class="controls">
+    <div class="power-btn" onclick="togglePower()"></div>
+    <div class="led"></div>
     <div class="selector" onclick="toggleRetro()"></div>
   </div>
 
@@ -226,41 +222,38 @@
     const modes = ["white", "green", "amber"];
     let current = 0;
     let rotation = 0;
+    let powered = false;
 
-    function powerOn() {
+    function togglePower() {
       const textEl = document.querySelector('.text');
-      textEl.classList.remove('crt-off');
-      textEl.classList.add('crt-on');
-      document.body.classList.remove("off");
-      document.body.classList.add("on", modes[current]);
-    }
-
-    function powerOff() {
-      const textEl = document.querySelector('.text');
-      textEl.classList.remove('crt-on');
-      textEl.classList.add('crt-off');
-      textEl.addEventListener('animationend', () => {
-        document.body.classList.remove("on", ...modes);
-        document.body.classList.add("off");
-        current = 0;
-        rotation = 0;
-        document.querySelector('.selector').style.transform = 'rotate(0deg)';
-      }, { once: true });
+      if (!powered) {
+        powered = true;
+        textEl.classList.remove('crt-off');
+        textEl.classList.add('crt-on');
+        document.body.classList.remove("off");
+        document.body.classList.add("on", modes[current]);
+      } else {
+        powered = false;
+        textEl.classList.remove('crt-on');
+        textEl.classList.add('crt-off');
+        textEl.addEventListener('animationend', () => {
+          document.body.classList.remove("on", ...modes);
+          document.body.classList.add("off");
+          current = 0;
+          rotation = 0;
+          document.querySelector('.selector').style.transform = 'rotate(0deg)';
+        }, { once: true });
+      }
     }
 
     function toggleRetro() {
+      if (!powered) return;
       document.body.classList.remove(modes[current]);
       current = (current + 1) % modes.length;
       document.body.classList.add(modes[current]);
       rotation += 120;
       document.querySelector('.selector').style.transform = `rotate(${rotation}deg)`;
     }
-
-    // Optional: allow clicking selector for off if pressed long
-    document.querySelector('.selector').addEventListener('contextmenu', e => {
-      e.preventDefault();
-      powerOff();
-    });
   </script>
 </body>
 </html>
