@@ -72,6 +72,37 @@
     }
     @keyframes flickerScreen { 0%{opacity:0.1;} 100%{opacity:0.2;} }
 
+    /* CRT Power On Animation */
+    .crt-on {
+      animation: crtOn 1s forwards;
+    }
+    @keyframes crtOn {
+      0% {
+        transform: scaleY(0.05) scaleX(0);
+        opacity: 0;
+        filter: brightness(500%);
+      }
+      50% {
+        transform: scaleY(0.05) scaleX(1);
+        opacity: 1;
+      }
+      100% {
+        transform: scaleY(1) scaleX(1);
+        opacity: 1;
+        filter: brightness(100%);
+      }
+    }
+
+    /* CRT Power Off Animation */
+    .crt-off {
+      animation: crtOff 0.8s forwards;
+    }
+    @keyframes crtOff {
+      0% { transform: scaleY(1) scaleX(1); opacity: 1; filter: brightness(100%); }
+      50% { transform: scaleY(0.05) scaleX(1); opacity: 1; filter: brightness(500%); }
+      100% { transform: scaleY(0.05) scaleX(0); opacity: 0; }
+    }
+
     /* Modes */
     body.white { background-color: #121212; color: #ffffff; }
     body.white .text {
@@ -116,21 +147,25 @@
     }
 
     /* Power button (initial) */
-    .power-btn {
+    .power-btn,
+    .selector {
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
       border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #666, #222);
       border: 3px solid #333;
-      box-shadow: inset -3px -3px 6px rgba(0,0,0,0.6),
-                  inset 3px 3px 6px rgba(255,255,255,0.1),
-                  0 0 15px rgba(0,0,0,0.8);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform 0.2s, opacity 0.5s;
+      transition: transform 0.3s ease, opacity 0.5s;
+    }
+
+    .power-btn {
+      background: radial-gradient(circle at 30% 30%, #666, #222);
+      box-shadow: inset -3px -3px 6px rgba(0,0,0,0.6),
+                  inset 3px 3px 6px rgba(255,255,255,0.1),
+                  0 0 15px rgba(0,0,0,0.8);
       z-index: 2;
     }
     .power-btn:active { transform: scale(0.95); }
@@ -145,22 +180,11 @@
       pointer-events: none;
     }
 
-    /* Rotary Selector (appears in same spot) */
     .selector {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      border-radius: 50%;
       background: radial-gradient(circle at 30% 30%, #555, #111);
-      border: 3px solid #333;
       box-shadow: inset -3px -3px 6px rgba(0,0,0,0.6),
                   inset 3px 3px 6px rgba(255,255,255,0.1),
                   0 0 6px rgba(0,0,0,0.8);
-      cursor: pointer;
-      transition: transform 0.3s ease, opacity 0.5s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       opacity: 0;
       pointer-events: none;
       z-index: 1;
@@ -204,8 +228,24 @@
     let rotation = 0;
 
     function powerOn() {
+      const textEl = document.querySelector('.text');
+      textEl.classList.remove('crt-off');
+      textEl.classList.add('crt-on');
       document.body.classList.remove("off");
       document.body.classList.add("on", modes[current]);
+    }
+
+    function powerOff() {
+      const textEl = document.querySelector('.text');
+      textEl.classList.remove('crt-on');
+      textEl.classList.add('crt-off');
+      textEl.addEventListener('animationend', () => {
+        document.body.classList.remove("on", ...modes);
+        document.body.classList.add("off");
+        current = 0;
+        rotation = 0;
+        document.querySelector('.selector').style.transform = 'rotate(0deg)';
+      }, { once: true });
     }
 
     function toggleRetro() {
@@ -215,6 +255,12 @@
       rotation += 120;
       document.querySelector('.selector').style.transform = `rotate(${rotation}deg)`;
     }
+
+    // Optional: allow clicking selector for off if pressed long
+    document.querySelector('.selector').addEventListener('contextmenu', e => {
+      e.preventDefault();
+      powerOff();
+    });
   </script>
 </body>
 </html>
