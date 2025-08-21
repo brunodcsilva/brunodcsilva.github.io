@@ -5,18 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>brunodcsilva_</title>
   <style>
-    /* Reset & Fix Scrolling Issues */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-    /* Fix iOS 100vh issue & prevent scrolling */
     html, body {
-      height: 100svh; /* Uses small viewport height for mobile */
+      height: 100svh;
       width: 100vw;
-      overflow: hidden; /* Prevents unwanted scrolling */
+      overflow: hidden;
       background-color: #121212;
       color: #ffffff;
       font-family: 'Roboto Mono', monospace;
@@ -25,34 +23,44 @@
       align-items: center;
       text-align: center;
       position: relative;
+      transition: all 0.3s ease;
     }
 
-    /* Text Styling */
-    .text {
-      display: flex;
-      align-items: center; /* Ensures cursor and text align */
-      justify-content: center;
-      font-size: 5vw; /* Responsive font size */
+    /* Default white mode */
+    body.white {
+      background-color: #121212;
+      color: #ffffff;
+    }
+    body.white .text {
+      color: #ffffff;
       text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
                    0 0 20px rgba(255, 255, 255, 0.6),
                    0 0 30px rgba(255, 255, 255, 0.4);
-      white-space: nowrap;
-      animation: flickerText 1.5s infinite alternate;
-      line-height: 1; /* Ensures no extra spacing */
     }
-
-    /* Cursor Effect */
-    .cursor {
-      display: inline-block;
-      width: 0.35em; /* Adjusted for better proportionality */
-      height: 1em; /* Matches text height */
+    body.white .cursor {
       background-color: #ffffff;
-      margin-left: 0.2em;
-      animation: blink 1.2s infinite;
       box-shadow: 0 0 20px rgba(255, 255, 255, 0.9),
                   0 0 30px rgba(255, 255, 255, 0.7),
                   0 0 40px rgba(255, 255, 255, 0.5);
-      vertical-align: middle; /* Aligns cursor with text */
+    }
+
+    .text {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5vw;
+      white-space: nowrap;
+      animation: flickerText 1.5s infinite alternate;
+      line-height: 1;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 0.35em;
+      height: 1em;
+      margin-left: 0.2em;
+      animation: blink 1.2s infinite;
+      vertical-align: middle;
     }
 
     @keyframes blink {
@@ -60,17 +68,15 @@
       50% { opacity: 0; }
     }
 
-    /* Subtle Randomized Text Flicker Effect */
     @keyframes flickerText {
-      0% { opacity: 1; text-shadow: 0 0 10px rgba(255, 255, 255, 0.8); }
-      20% { opacity: 0.95; text-shadow: 0 0 12px rgba(255, 255, 255, 0.75); }
-      40% { opacity: 1; text-shadow: 0 0 15px rgba(255, 255, 255, 0.7); }
-      60% { opacity: 0.98; text-shadow: 0 0 10px rgba(255, 255, 255, 0.8); }
-      80% { opacity: 1; text-shadow: 0 0 18px rgba(255, 255, 255, 0.65); }
-      100% { opacity: 0.97; text-shadow: 0 0 12px rgba(255, 255, 255, 0.7); }
+      0% { opacity: 1; }
+      20% { opacity: 0.95; }
+      40% { opacity: 1; }
+      60% { opacity: 0.98; }
+      80% { opacity: 1; }
+      100% { opacity: 0.97; }
     }
 
-    /* Scanline Effect */
     .scanlines {
       position: absolute;
       top: 0;
@@ -88,26 +94,94 @@
       animation: flickerScreen 0.1s infinite alternate;
     }
 
-    /* Screen Flicker Effect */
     @keyframes flickerScreen {
       0% { opacity: 0.1; }
       100% { opacity: 0.2; }
     }
 
-    /* Responsive Fixes */
+    /* Green CRT */
+    body.green {
+      background-color: #001400;
+      color: #00ff00;
+    }
+    body.green .text {
+      color: #00ff00;
+      text-shadow: 0 0 8px #00ff00, 0 0 16px #00ff00, 0 0 32px #00ff00;
+    }
+    body.green .cursor {
+      background-color: #00ff00;
+      box-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00;
+    }
+
+    /* Amber CRT */
+    body.amber {
+      background-color: #140a00;
+      color: #ffbf00;
+    }
+    body.amber .text {
+      color: #ffbf00;
+      text-shadow: 0 0 8px #ffbf00, 0 0 16px #ffbf00, 0 0 32px #ffbf00;
+    }
+    body.amber .cursor {
+      background-color: #ffbf00;
+      box-shadow: 0 0 20px #ffbf00, 0 0 40px #ffbf00;
+    }
+
+    /* Retro CRT Power Button */
+    .retro-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 3px solid #333;
+      background: radial-gradient(circle at 30% 30%, #444, #111);
+      cursor: pointer;
+      z-index: 2;
+      font-size: 28px;
+      font-weight: bold;
+      color: #666;
+      text-align: center;
+      line-height: 54px;
+      box-shadow: inset -3px -3px 6px rgba(0,0,0,0.6),
+                  inset 3px 3px 6px rgba(255,255,255,0.1),
+                  0 0 6px rgba(0,0,0,0.8);
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .retro-btn:active {
+      transform: scale(0.92);
+      box-shadow: inset 3px 3px 6px rgba(0,0,0,0.8),
+                  inset -3px -3px 6px rgba(255,255,255,0.1);
+    }
+
+    /* Glow changes per mode */
+    body.white .retro-btn { color: #fff; text-shadow: 0 0 8px #fff; box-shadow: 0 0 15px #fff, inset -3px -3px 6px #000, inset 3px 3px 6px rgba(255,255,255,0.2); }
+    body.green .retro-btn { color: #00ff00; text-shadow: 0 0 8px #00ff00; box-shadow: 0 0 15px #00ff00, inset -3px -3px 6px #000, inset 3px 3px 6px rgba(0,255,0,0.2); }
+    body.amber .retro-btn { color: #ffbf00; text-shadow: 0 0 8px #ffbf00; box-shadow: 0 0 15px #ffbf00, inset -3px -3px 6px #000, inset 3px 3px 6px rgba(255,191,0,0.2); }
+
     @media (max-width: 768px) {
-      .text {
-        font-size: 8vw;
-      }
-      .cursor {
-        width: 0.3em;
-        height: 0.9em;
-      }
+      .text { font-size: 8vw; }
+      .cursor { width: 0.3em; height: 0.9em; }
     }
   </style>
-</head>
-<body>
+</head>        
+<body class="white">
   <div class="scanlines"></div>
   <div class="text">bruno dc silva<span class="cursor"></span></div>
+  <button class="retro-btn" onclick="toggleRetro()">⏻</button>
+
+  <script>
+    const modes = ["white", "green", "amber"];
+    let current = 0;
+
+    function toggleRetro() {
+      document.body.classList.remove(modes[current]);
+      current = (current + 1) % modes.length;
+      document.body.classList.add(modes[current]);
+    }
+  </script>
 </body>
 </html>
