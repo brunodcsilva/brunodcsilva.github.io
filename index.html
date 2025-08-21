@@ -5,17 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>brunodcsilva_</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     html, body {
       height: 100svh;
       width: 100vw;
       overflow: hidden;
-      background-color: #121212;
+      background-color: #000;
       color: #ffffff;
       font-family: 'Roboto Mono', monospace;
       display: flex;
@@ -26,22 +22,10 @@
       transition: all 0.3s ease;
     }
 
-    /* Default white mode */
-    body.white {
-      background-color: #121212;
-      color: #ffffff;
-    }
-    body.white .text {
-      color: #ffffff;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
-                   0 0 20px rgba(255, 255, 255, 0.6),
-                   0 0 30px rgba(255, 255, 255, 0.4);
-    }
-    body.white .cursor {
-      background-color: #ffffff;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.9),
-                  0 0 30px rgba(255, 255, 255, 0.7),
-                  0 0 40px rgba(255, 255, 255, 0.5);
+    body.off .text,
+    body.off .cursor,
+    body.off .selector {
+      display: none;
     }
 
     .text {
@@ -52,6 +36,12 @@
       white-space: nowrap;
       animation: flickerText 1.5s infinite alternate;
       line-height: 1;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    body.on .text {
+      opacity: 1;
     }
 
     .cursor {
@@ -63,11 +53,7 @@
       vertical-align: middle;
     }
 
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
-
+    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0;} }
     @keyframes flickerText {
       0% { opacity: 1; }
       20% { opacity: 0.95; }
@@ -79,13 +65,10 @@
 
     .scanlines {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       background: repeating-linear-gradient(
-        transparent,
-        transparent 3px,
+        transparent, transparent 3px,
         rgba(255, 255, 255, 0.1) 3px,
         rgba(255, 255, 255, 0.1) 5px
       );
@@ -93,17 +76,24 @@
       z-index: 1;
       animation: flickerScreen 0.1s infinite alternate;
     }
+    @keyframes flickerScreen { 0%{opacity:0.1;} 100%{opacity:0.2;} }
 
-    @keyframes flickerScreen {
-      0% { opacity: 0.1; }
-      100% { opacity: 0.2; }
+    /* Modes */
+    body.white { background-color: #121212; color: #ffffff; }
+    body.white .text {
+      color: #ffffff;
+      text-shadow: 0 0 10px rgba(255,255,255,0.8),
+                   0 0 20px rgba(255,255,255,0.6),
+                   0 0 30px rgba(255,255,255,0.4);
+    }
+    body.white .cursor {
+      background-color: #ffffff;
+      box-shadow: 0 0 20px rgba(255,255,255,0.9),
+                  0 0 30px rgba(255,255,255,0.7),
+                  0 0 40px rgba(255,255,255,0.5);
     }
 
-    /* Green CRT */
-    body.green {
-      background-color: #001400;
-      color: #00ff00;
-    }
+    body.green { background-color: #001400; color: #00ff00; }
     body.green .text {
       color: #00ff00;
       text-shadow: 0 0 8px #00ff00, 0 0 16px #00ff00, 0 0 32px #00ff00;
@@ -113,11 +103,7 @@
       box-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00;
     }
 
-    /* Amber CRT */
-    body.amber {
-      background-color: #140a00;
-      color: #ffbf00;
-    }
+    body.amber { background-color: #140a00; color: #ffbf00; }
     body.amber .text {
       color: #ffbf00;
       text-shadow: 0 0 8px #ffbf00, 0 0 16px #ffbf00, 0 0 32px #ffbf00;
@@ -127,60 +113,98 @@
       box-shadow: 0 0 20px #ffbf00, 0 0 40px #ffbf00;
     }
 
-    /* Retro CRT Power Button */
-    .retro-btn {
+    /* Power button (initial) */
+    .power-btn {
+      position: absolute;
+      bottom: 15%;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #666, #222);
+      border: 3px solid #333;
+      box-shadow: inset -3px -3px 6px rgba(0,0,0,0.6),
+                  inset 3px 3px 6px rgba(255,255,255,0.1),
+                  0 0 15px rgba(0,0,0,0.8);
+      cursor: pointer;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s;
+    }
+    .power-btn:active { transform: scale(0.95); }
+    .power-btn::after {
+      content: "⏻";
+      font-size: 2.5rem;
+      color: #fff;
+      text-shadow: 0 0 10px #fff;
+    }
+    body.on .power-btn { display: none; }
+
+    /* Rotary Selector (after power on) */
+    .selector {
       position: absolute;
       top: 1rem;
       right: 1rem;
-      width: 60px;
-      height: 60px;
+      width: 70px;
+      height: 70px;
       border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #555, #111);
       border: 3px solid #333;
-      background: radial-gradient(circle at 30% 30%, #444, #111);
-      cursor: pointer;
-      z-index: 2;
-      font-size: 28px;
-      font-weight: bold;
-      color: #666;
-      text-align: center;
-      line-height: 54px;
       box-shadow: inset -3px -3px 6px rgba(0,0,0,0.6),
                   inset 3px 3px 6px rgba(255,255,255,0.1),
                   0 0 6px rgba(0,0,0,0.8);
-      transition: all 0.2s ease;
-      user-select: none;
+      cursor: pointer;
+      z-index: 2;
+      transition: transform 0.3s ease, opacity 1s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
     }
+    body.on .selector { opacity: 1; }
 
-    .retro-btn:active {
-      transform: scale(0.92);
-      box-shadow: inset 3px 3px 6px rgba(0,0,0,0.8),
-                  inset -3px -3px 6px rgba(255,255,255,0.1);
+    .selector::after {
+      content: "";
+      position: absolute;
+      width: 6px; height: 25px;
+      background: #666;
+      border-radius: 3px;
+      top: 8px;
+      transition: background 0.3s, box-shadow 0.3s;
     }
-
-    /* Glow changes per mode */
-    body.white .retro-btn { color: #fff; text-shadow: 0 0 8px #fff; box-shadow: 0 0 15px #fff, inset -3px -3px 6px #000, inset 3px 3px 6px rgba(255,255,255,0.2); }
-    body.green .retro-btn { color: #00ff00; text-shadow: 0 0 8px #00ff00; box-shadow: 0 0 15px #00ff00, inset -3px -3px 6px #000, inset 3px 3px 6px rgba(0,255,0,0.2); }
-    body.amber .retro-btn { color: #ffbf00; text-shadow: 0 0 8px #ffbf00; box-shadow: 0 0 15px #ffbf00, inset -3px -3px 6px #000, inset 3px 3px 6px rgba(255,191,0,0.2); }
+    body.white .selector::after { background: #fff; box-shadow: 0 0 12px #fff; }
+    body.green .selector::after { background: #00ff00; box-shadow: 0 0 12px #00ff00; }
+    body.amber .selector::after { background: #ffbf00; box-shadow: 0 0 12px #ffbf00; }
 
     @media (max-width: 768px) {
       .text { font-size: 8vw; }
       .cursor { width: 0.3em; height: 0.9em; }
     }
   </style>
-</head>        
-<body class="white">
+</head>
+<body class="off">
   <div class="scanlines"></div>
   <div class="text">bruno dc silva<span class="cursor"></span></div>
-  <button class="retro-btn" onclick="toggleRetro()">⏻</button>
+  <div class="power-btn" onclick="powerOn()"></div>
+  <div class="selector" onclick="toggleRetro()"></div>
 
   <script>
     const modes = ["white", "green", "amber"];
     let current = 0;
+    let rotation = 0;
+
+    function powerOn() {
+      document.body.classList.remove("off");
+      document.body.classList.add("on", modes[current]);
+    }
 
     function toggleRetro() {
       document.body.classList.remove(modes[current]);
       current = (current + 1) % modes.length;
       document.body.classList.add(modes[current]);
+      rotation += 120;
+      document.querySelector('.selector').style.transform = `rotate(${rotation}deg)`;
     }
   </script>
 </body>
