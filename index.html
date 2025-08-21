@@ -15,6 +15,7 @@
       color: #ffffff;
       font-family: 'Roboto Mono', monospace;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
@@ -23,15 +24,11 @@
     }
 
     body.off .text,
-    body.off .cursor,
-    body.off .selector {
+    body.off .cursor {
       display: none;
     }
 
     .text {
-      display: flex;
-      align-items: center;
-      justify-content: center;
       font-size: 5vw;
       white-space: nowrap;
       animation: flickerText 1.5s infinite alternate;
@@ -39,10 +36,7 @@
       opacity: 0;
       transition: opacity 1s ease;
     }
-
-    body.on .text {
-      opacity: 1;
-    }
+    body.on .text { opacity: 1; }
 
     .cursor {
       display: inline-block;
@@ -113,12 +107,19 @@
       box-shadow: 0 0 20px #ffbf00, 0 0 40px #ffbf00;
     }
 
+    /* Button container */
+    .button-area {
+      margin-top: 2rem;
+      width: 100px;
+      height: 100px;
+      position: relative;
+    }
+
     /* Power button (initial) */
     .power-btn {
       position: absolute;
-      bottom: 15%;
-      width: 100px;
-      height: 100px;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       border-radius: 50%;
       background: radial-gradient(circle at 30% 30%, #666, #222);
       border: 3px solid #333;
@@ -126,11 +127,11 @@
                   inset 3px 3px 6px rgba(255,255,255,0.1),
                   0 0 15px rgba(0,0,0,0.8);
       cursor: pointer;
-      z-index: 2;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform 0.2s;
+      transition: transform 0.2s, opacity 0.5s;
+      z-index: 2;
     }
     .power-btn:active { transform: scale(0.95); }
     .power-btn::after {
@@ -139,15 +140,16 @@
       color: #fff;
       text-shadow: 0 0 10px #fff;
     }
-    body.on .power-btn { display: none; }
+    body.on .power-btn {
+      opacity: 0;
+      pointer-events: none;
+    }
 
-    /* Rotary Selector (after power on) */
+    /* Rotary Selector (appears in same spot) */
     .selector {
       position: absolute;
-      top: 1rem;
-      right: 1rem;
-      width: 70px;
-      height: 70px;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       border-radius: 50%;
       background: radial-gradient(circle at 30% 30%, #555, #111);
       border: 3px solid #333;
@@ -155,14 +157,17 @@
                   inset 3px 3px 6px rgba(255,255,255,0.1),
                   0 0 6px rgba(0,0,0,0.8);
       cursor: pointer;
-      z-index: 2;
-      transition: transform 0.3s ease, opacity 1s ease;
+      transition: transform 0.3s ease, opacity 0.5s;
       display: flex;
       align-items: center;
       justify-content: center;
       opacity: 0;
+      pointer-events: none;
     }
-    body.on .selector { opacity: 1; }
+    body.on .selector {
+      opacity: 1;
+      pointer-events: auto;
+    }
 
     .selector::after {
       content: "";
@@ -170,7 +175,7 @@
       width: 6px; height: 25px;
       background: #666;
       border-radius: 3px;
-      top: 8px;
+      top: calc(50% - 35px);
       transition: background 0.3s, box-shadow 0.3s;
     }
     body.white .selector::after { background: #fff; box-shadow: 0 0 12px #fff; }
@@ -186,8 +191,11 @@
 <body class="off">
   <div class="scanlines"></div>
   <div class="text">bruno dc silva<span class="cursor"></span></div>
-  <div class="power-btn" onclick="powerOn()"></div>
-  <div class="selector" onclick="toggleRetro()"></div>
+
+  <div class="button-area">
+    <div class="power-btn" onclick="powerOn()"></div>
+    <div class="selector" onclick="toggleRetro()"></div>
+  </div>
 
   <script>
     const modes = ["white", "green", "amber"];
